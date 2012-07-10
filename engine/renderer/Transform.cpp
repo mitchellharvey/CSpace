@@ -144,13 +144,13 @@ void Transform::LookAt(const vector3 &p)
     vector3 newForward, newUp, newRight;
 
     newForward = p - GetTranslation();
-    v3Normalize(newForward);
+    Normalize(newForward);
 
-    newRight = v3CrossProduct(newForward, worldUp);
-    v3Normalize(newRight);
+    newRight = CrossProduct(newForward, worldUp);
+    Normalize(newRight);
     
-    newUp = v3CrossProduct(newRight, newForward);
-    v3Normalize(newUp);
+    newUp = CrossProduct(newRight, newForward);
+    Normalize(newUp);
 
     SetXAxis(newRight);
     SetYAxis(newUp);

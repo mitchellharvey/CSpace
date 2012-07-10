@@ -57,6 +57,8 @@ bool GLRenderer::ImplementationInitialize(void)
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glEnable(GL_DEPTH_TEST);
 
+    // http://www.opengl.org/wiki/Tutorial:_OpenGL_3.1_The_First_Triangle_(C%2B%2B/Win)
+
     // Generate our vertex arrays
     glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &_glTotalVertexArrays);
     if (_glTotalVertexArrays >= 1)
@@ -81,8 +83,6 @@ bool GLRenderer::ImplementationInitialize(void)
     glGenBuffers(1, &_staticVertexBuffer.id);
     glBindBuffer(GL_ARRAY_BUFFER, _staticVertexBuffer.id);
     glBufferData(GL_ARRAY_BUFFER, cStaticVertexBufferSize, NULL, GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-    glEnableVertexAttribArray(0);
 
     _staticVertexBuffer.usedSize = 0;
     _staticVertexBuffer.totalSize = cStaticVertexBufferSize;
@@ -94,6 +94,14 @@ bool GLRenderer::ImplementationInitialize(void)
 
     _staticIndexBuffer.usedSize = 0;
     _staticIndexBuffer.totalSize = cStaticIndexBufferSize;
+
+    // Color Buffer
+    glGenBuffers(1, &_staticColorBuffer.id);
+    glBindBuffer(GL_ARRAY_BUFFER, _staticColorBuffer.id);
+    glBufferData(GL_ARRAY_BUFFER, cStaticVertexBufferSize, NULL, GL_STATIC_DRAW);
+
+    _staticColorBuffer.usedSize = 0;
+    _staticColorBuffer.totalSize = cStaticVertexBufferSize;
 
     glBindVertexArray(0);
 
@@ -113,8 +121,10 @@ void GLRenderer::ImplementationRenderScene(Camera *camera, Scene *pScene)
 
     if (pScene)
     {
-        renderables.swap(pScene->GetSortedRenderables());
+        pScene->GetSortedRenderables(renderables);
     }
+
+    
 
     std::vector<Renderable>::iterator it = renderables.begin();
     std::vector<Renderable>::iterator end = renderables.end();
@@ -129,6 +139,7 @@ void GLRenderer::ImplementationRenderScene(Camera *camera, Scene *pScene)
 
         RenderModel(mdata);
     }
+
 }
 //------------------------------------------------------------------------------------------------------------------------
 GLRenderer::ShaderProgram &GLRenderer::LinkShaderProgram(VertexShaderResource *vertShader, FragmentShaderResource *fragShader)
@@ -224,14 +235,29 @@ GLRenderer::ShaderProgram &GLRenderer::LinkShaderProgram(VertexShaderResource *v
 
         if (program->linked)
         {
+            // TODO: Each vertex array represents a unique way of buffering data into variables for the shader.
+            // for now, we only support passing in this data but later? :)
+            glBindVertexArray(_glVertexArrays[0]);
+
+            // Position
             char *vertexAttrib = (vertShader) ? vertShader->GetVertexAttribName() : 0;
             program->vertexAttribLoc = glGetAttribLocation(program->id, vertexAttrib);
+            glBindBuffer(GL_ARRAY_BUFFER, _staticVertexBuffer.id);
+            glVertexAttribPointer(program->vertexAttribLoc, 3, GL_FLOAT, GL_FALSE, 0, 0);
+            glEnableVertexAttribArray(program->vertexAttribLoc);
 
+            // Color
             char *colorAttrib = (vertShader) ? vertShader->GetColorAttribName() : 0;
             program->colorAttribLoc = glGetAttribLocation(program->id, colorAttrib);
+            glBindBuffer(GL_ARRAY_BUFFER, _staticColorBuffer.id);
+            glVertexAttribPointer(program->colorAttribLoc, 4, GL_FLOAT, GL_FALSE, 0, 0);
+            glEnableVertexAttribArray(program->colorAttribLoc);
 
+            // Normals
             char *normalAttrib = (vertShader) ? vertShader->GetNormalAttribName() : 0;
             program->normalAttribLoc = glGetAttribLocation(program->id, normalAttrib);
+
+            glBindVertexArray(0);
         }
     }
 
@@ -323,9 +349,6 @@ GLRenderer::FragmentShaderResourceData &GLRenderer::CompileShader(FragmentShader
 //------------------------------------------------------------------------------------------------------------------------
 void GLRenderer::ApplyMaterial(Material &material, Camera *camera, Renderable *renderable)
 {
-    // TODO: Avoid setting opengl state redudnetly 
-    glBindVertexArray(_glVertexArrays[0]);
-
     // TODO: Bind Texture
 
     VertexShaderResource *vertShader = (material.GetVertexShader()) ? material.GetVertexShader() : _defaultVertexShader;
@@ -341,6 +364,9 @@ void GLRenderer::ApplyMaterial(Material &material, Camera *camera, Renderable *r
             // TODO: Not sure how i feel about this string check, staying for now..
             if (camera && material.GetProjectionMatrixShaderVar()[0] != 0)
             {
+                // TODO: To avoid the constant updating of uniforms on each apply material, we should cache the values inside
+                // the program so we don't set it if not neccesary, at least..  Consider refacoring these couple functions later
+                // I don't like having to send in the camera to ApplyMaterial()
                 program.projMatrixAttribLoc = glGetUniformLocation(program.id, material.GetProjectionMatrixShaderVar());
                 if (program.projMatrixAttribLoc >= 0)
                 {
@@ -364,10 +390,6 @@ void GLRenderer::ApplyMaterial(Material &material, Camera *camera, Renderable *r
                 }
             }
 
-            if (program.colorAttribLoc > -1)
-            {
-                //glVertexAttrib3f(program.colorAttribLoc, 1.0f, 0.0f, 0.0f);
-            }
         }
         else
         {
@@ -382,9 +404,7 @@ void GLRenderer::ApplyMaterial(Material &material, Camera *camera, Renderable *r
 //------------------------------------------------------------------------------------------------------------------------
 void GLRenderer::RenderModel(ModelResourceData &data)
 {
-    glVertexPointer(3, GL_FLOAT, 0, (GLvoid *)data.vertexOffset);
-    glIndexPointer(GL_UNSIGNED_INT, 0, (GLvoid *)data.indexOffset);
-
+    glBindVertexArray(_glVertexArrays[0]);
     glDrawElements(GL_TRIANGLES, data.indexCount, GL_UNSIGNED_INT, 0);
 }
 //------------------------------------------------------------------------------------------------------------------------
@@ -398,19 +418,26 @@ GLRenderer::ModelResourceData &GLRenderer::PushToGPU(ModelResource *resource)
 
     const system::UINT32 vertexByteSize = resource->GetTotalVertices() * sizeof(vector3);
     const system::UINT32 indexByteSize = resource->GetTotalIndices() * sizeof(system::UINT32);
+    const system::UINT32 colorByteSize = resource->GetTotalColors() * sizeof(vector4);
 
     ModelResourceData data;
     memset(&data, 0, sizeof(data));
 
     if (
         (vertexByteSize < (_staticVertexBuffer.totalSize - _staticVertexBuffer.usedSize)) &&
-        (indexByteSize < (_staticIndexBuffer.totalSize - _staticIndexBuffer.usedSize))
+        (indexByteSize < (_staticIndexBuffer.totalSize - _staticIndexBuffer.usedSize)) &&
+        (colorByteSize < (_staticColorBuffer.totalSize - _staticColorBuffer.usedSize))
         )
     {
         glBindBuffer(GL_ARRAY_BUFFER, _staticVertexBuffer.id);
         glBufferSubData(GL_ARRAY_BUFFER, _staticVertexBuffer.usedSize, vertexByteSize, resource->GetVertices());
         data.vertexCount = resource->GetTotalVertices();
         data.vertexOffset = _staticVertexBuffer.usedSize;
+
+        glBindBuffer(GL_ARRAY_BUFFER, _staticColorBuffer.id);
+        glBufferSubData(GL_ARRAY_BUFFER, _staticColorBuffer.usedSize, colorByteSize, resource->GetColors());
+        data.colorCount = resource->GetTotalColors();
+        data.colorOffset = _staticColorBuffer.usedSize;
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _staticIndexBuffer.id);
         glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, _staticIndexBuffer.usedSize, indexByteSize, resource->GetIndices());
@@ -419,10 +446,11 @@ GLRenderer::ModelResourceData &GLRenderer::PushToGPU(ModelResource *resource)
 
         _staticIndexBuffer.usedSize += indexByteSize;
         _staticVertexBuffer.usedSize += vertexByteSize;
+        _staticColorBuffer.usedSize += colorByteSize;
     }
     else
     {
-        // TODO: Log error
+        // TODO: Attempt to defragment memeory?... hehe we aren't handling this anytime soon, kick up the constants.
     }
     _modelResourceDataMap.insert(ResourceToModelDataPair(resource, data));
 

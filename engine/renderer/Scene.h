@@ -21,7 +21,7 @@ public:
     virtual void RemoveRenderable(Renderable *renderable);
     virtual void ClearRenderables(void);
 
-    virtual std::vector<Renderable> GetSortedRenderables(void) const;
+    virtual void GetSortedRenderables(std::vector<Renderable> &sorted) const;
 
 protected:
     std::vector<Renderable *> _renderables;

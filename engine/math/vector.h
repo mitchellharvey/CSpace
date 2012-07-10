@@ -130,7 +130,66 @@ static inline const vector3 operator*(float scale, const vector3 &v)
     return v * scale;
 }
 
-static inline vector3 v3CrossProduct(const vector3 &v1, const vector3 &v2)
+struct vector4
+{
+    float x, y, z, w;
+
+    inline vector4(float x, float y, float z, float w) : x(x), y(y), z(z), w(w) { }
+    inline vector4(const vector4 &v) : x(v.x), y(v.y), z(v.z), w(v.w) { }
+    inline vector4(void) : x(0.0f), y(0.0f), z(0.0f), w(0.0f) { }
+    inline vector4 &set(float x, float y, float z, float w) 
+    { 
+        this->x = x; this->y = y; this->z = z;
+        this->w = w;
+    }
+    inline vector4 &operator=(const vector4 &v)
+    {
+        x = v.x; y = v.y; z = v.z; w = v.w;
+        return *this;
+    }
+    inline bool operator==(const vector4 &v) const
+    {
+        return (x == v.x && y == v.y && z == v.z && w == v.w);
+    }
+    inline bool operator!=(const vector4 &v) const
+    {
+        return !(*this == v);
+    }
+    inline const vector4 operator*(const float scale) const
+    {
+        return vector4(x * scale, y * scale, z * scale, w * scale);
+    }
+    inline vector4 &operator*=(const float scale)
+    {
+        x *= scale; y *= scale; z *= scale; w *= scale;
+        return *this;
+    }
+    inline const vector4 operator+(const vector4 &v) const
+    {
+        return vector4(x + v.x, y + v.y, z + v.z, w + v.w);
+    }
+    inline vector4 &operator+=(const vector4 &v)
+    {
+        x += v.x; y += v.y; z += v.z; w += v.w;
+        return *this;
+    }
+    inline const vector4 operator-(const vector4 &v) const
+    {
+        return vector4(x - v.x, y - v.y, z - v.z, w - v.w);
+    }
+    inline vector4 &operator-=(const vector4 &v)
+    {
+        x -= v.x; y -= v.y; z -= v.z; w -= v.w;
+        return *this;
+    }
+};
+
+static inline const vector4 operator*(float scale, const vector4 &v)
+{
+    return v * scale;
+}
+
+static inline vector3 CrossProduct(const vector3 &v1, const vector3 &v2)
 {
     vector3 r;
     r.x = v1.y * v2.z - v2.y * v1.z;
@@ -139,19 +198,19 @@ static inline vector3 v3CrossProduct(const vector3 &v1, const vector3 &v2)
     return r;
 }
 
-static inline float v3MagnitudeSquared(const vector3 &v)
+static inline float MagnitudeSquared(const vector3 &v)
 {
     return v.x * v.x + v.y * v.y + v.z * v.z;
 }
 
-static inline float v3Magnitude(const vector3 &v)
+static inline float Magnitude(const vector3 &v)
 {
-    return sqrt(v3MagnitudeSquared(v));
+    return sqrt(MagnitudeSquared(v));
 }
 
-static inline void v3Normalize(vector3 &v)
+static inline void Normalize(vector3 &v)
 {
-    float len = v3Magnitude(v);
+    float len = Magnitude(v);
 
     if (len == 0)
         len = 1;

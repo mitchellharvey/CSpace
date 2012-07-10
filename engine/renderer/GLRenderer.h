@@ -50,6 +50,9 @@ private:
         system::UINT32 vertexOffset;
         system::UINT32 vertexCount;
 
+        system::UINT32 colorOffset;
+        system::UINT32 colorCount;
+
         system::UINT32 indexOffset;
         system::UINT32 indexCount;
     };
@@ -101,6 +104,7 @@ private:
     system::INT32 _glTotalVertexArrays;
     GLDataBuffer _staticVertexBuffer;
     GLDataBuffer _staticIndexBuffer;
+    GLDataBuffer _staticColorBuffer;
     VertexShaderResource *_defaultVertexShader;
     FragmentShaderResource *_defaultFragmentShader;
 

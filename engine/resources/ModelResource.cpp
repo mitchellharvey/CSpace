@@ -14,10 +14,12 @@ ModelResource::ModelResource(const system::utf8 &resourceFile) :
 ,_indices(0)
 ,_uvs(0)
 ,_normals(0)
+,_colors(0)
 ,_vertexCount(0)
 ,_indexCount(0)
 ,_uvCount(0)
 ,_normalCount(0)
+,_colorCount(0)
 {
 }
 //------------------------------------------------------------------------------------------------------------------------
@@ -48,6 +50,16 @@ const system::UINT32 * const ModelResource::GetIndices(void) const
 system::UINT32 ModelResource::GetTotalIndices(void) const
 {
     return _indexCount;
+}
+//------------------------------------------------------------------------------------------------------------------------
+const math::vector4 * const ModelResource::GetColors(void) const
+{
+    return _colors;
+}
+//------------------------------------------------------------------------------------------------------------------------
+system::UINT32 ModelResource::GetTotalColors(void) const
+{
+    return _colorCount;
 }
 } // resources
 } // engine

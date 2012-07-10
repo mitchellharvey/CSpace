@@ -26,11 +26,13 @@ public:
     virtual const system::UINT32 * const GetIndices() const;
     virtual const math::vector2 * const GetUVs() const;
     virtual const math::vector3 * const GetNormals() const;
+    virtual const math::vector4 * const GetColors() const;
 
     virtual system::UINT32 GetVertexCount() const;
     virtual system::UINT32 GetIndexCount() const;
     virtual system::UINT32 GetUVCount() const;
     virtual system::UINT32 GetNormalCount() const;
+    virtual system::UINT32 GetColorCount() const;
 
 protected:
     ModelLoader(const ModelLoader &);
@@ -39,10 +41,12 @@ protected:
     system::UINT32 *_indices;
     math::vector2 *_uvs;
     math::vector3 *_normals;
+    math::vector4 *_colors;
     system::UINT32 _vertexCount;
     system::UINT32 _indexCount;
     system::UINT32 _uvCount;
     system::UINT32 _normalCount;
+    system::UINT32 _colorCount;
     
 };
 } // resources

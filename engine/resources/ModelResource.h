@@ -20,6 +20,8 @@ public:
 
     const math::vector3 * const GetVertices(void) const;
     system::UINT32 GetTotalVertices(void) const;
+    const math::vector4 * const GetColors(void) const;
+    system::UINT32 GetTotalColors(void) const;
     const system::UINT32 * const GetIndices(void) const;
     system::UINT32 GetTotalIndices(void) const;
 
@@ -32,11 +34,13 @@ private:
     system::UINT32 *_indices;
     math::vector2 *_uvs;
     math::vector3 *_normals;
+    math::vector4 *_colors;
+
     system::UINT32 _vertexCount;
     system::UINT32 _indexCount;
     system::UINT32 _uvCount;
     system::UINT32 _normalCount;
-
+    system::UINT32 _colorCount;
 };
 } // resources
 } // engine

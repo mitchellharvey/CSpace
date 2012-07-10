@@ -116,16 +116,19 @@ ModelResource *ResourceLoader::LoadModel(const system::utf8 &filename, ModelLoad
         resource->_vertexCount = loader.GetVertexCount();
         resource->_normalCount = loader.GetNormalCount();
         resource->_uvCount = loader.GetUVCount();
+        resource->_colorCount = loader.GetColorCount();
 
         resource->_indices = (resource->_indexCount) ? new system::UINT32[resource->_indexCount] : 0;
         resource->_vertices = (resource->_vertexCount) ? new math::vector3[resource->_vertexCount] : 0;
         resource->_normals = (resource->_normalCount) ? new math::vector3[resource->_normalCount] : 0;
         resource->_uvs = (resource->_uvCount) ? new math::vector2[resource->_uvCount] : 0;
+        resource->_colors = (resource->_colorCount) ? new math::vector4[resource->_colorCount] : 0;
 
         memcpy(resource->_indices, loader.GetIndices( ), sizeof(system::UINT32) * resource->_indexCount); 
         memcpy(resource->_vertices, loader.GetVertices( ), sizeof(math::vector3) * resource->_vertexCount);
         memcpy(resource->_normals, loader.GetNormals( ), sizeof(math::vector3) * resource->_normalCount);
         memcpy(resource->_uvs, loader.GetUVs(), sizeof(math::vector2) * resource->_uvCount);
+        memcpy(resource->_colors, loader.GetColors(), sizeof(math::vector4) * resource->_colorCount);
 
         loader.UnloadModel();
     

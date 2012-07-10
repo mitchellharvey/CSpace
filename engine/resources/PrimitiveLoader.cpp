@@ -44,14 +44,22 @@ bool PrimitiveLoader::LoadModel(const system::utf8 &filename)
                                     vector3(0.0f, 0.0f, 1.0f)
                                   };
 
+           vector4 colors[]    = {
+                                    vector4(1.0f, 0.0f, 0.0f, 0.0f),
+                                    vector4(0.0f, 1.0f, 0.0f, 1.0f),
+                                    vector4(0.0f, 0.0f, 1.0f, 1.0f)
+                                 };
+
            CopyData(vertices, 
                     normals, 
                     indices, 
                     0,
+                    colors,
                     sizeof(vertices) / sizeof(vector3),
                     sizeof(normals) / sizeof(vector3),
                     sizeof(indices) / sizeof(system::UINT32),
-                    0);
+                    0,
+                    sizeof(colors) / sizeof(vector4));
         }
         break;
     }
@@ -65,15 +73,17 @@ void PrimitiveLoader::UnloadModel()
     delete [] _indices;
     delete [] _uvs;
     delete [] _normals;
-    _vertexCount = _indexCount = _uvCount = _normalCount = 0;
+    delete [] _colors;
+    _vertexCount = _indexCount = _uvCount = _normalCount = _colorCount = 0;
     _vertices = 0;
     _indices = 0;
     _uvs = 0;
     _normals = 0;
+    _colors = 0;
 }
 //------------------------------------------------------------------------------------------------------------------------
 void PrimitiveLoader::CopyData(const vector3 *vertices, const vector3 *normals, const system::UINT32 *indices, const vector2 *uvs,
-                               system::UINT32 vertexCount, system::UINT32 normalCount, system::UINT32 indexCount, system::UINT32 uvCount)
+                               const vector4 *colors, system::UINT32 vertexCount, system::UINT32 normalCount, system::UINT32 indexCount, system::UINT32 uvCount, system::UINT32 colorCount)
 {
     if (vertices && vertexCount)
     {
@@ -103,6 +113,12 @@ void PrimitiveLoader::CopyData(const vector3 *vertices, const vector3 *normals, 
         memcpy(_uvs, uvs, _uvCount * sizeof(vector2));
     }
 
+    if (colors && colorCount)
+    {
+        _colorCount = colorCount;
+        _colors = new vector4[_colorCount];
+        memcpy(_colors, colors, _colorCount * sizeof(vector4));
+    }
 }
 } // resources
 } // engine

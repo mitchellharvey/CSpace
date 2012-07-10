@@ -37,20 +37,18 @@ void Scene::RemoveRenderable(Renderable *renderable)
     }
 }
 //------------------------------------------------------------------------------------------------------------------------
-std::vector<Renderable> Scene::GetSortedRenderables(void) const
+void Scene::GetSortedRenderables(std::vector<Renderable> &sorted) const
 {
     // TODO: Actually sort these for the smalles amount of state changes
     // based on the material properties
 
-    std::vector<Renderable> sorted;
+    sorted.clear();
     std::vector<Renderable *>::const_iterator it = _renderables.cbegin();
     std::vector<Renderable *>::const_iterator end = _renderables.cend();
     for(; it != end; ++it)
     {
         sorted.push_back(*(*it));
     }
-
-    return sorted;
 }
 //------------------------------------------------------------------------------------------------------------------------
 void Scene::ClearRenderables(void)
