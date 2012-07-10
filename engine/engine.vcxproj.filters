@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="system">
+      <UniqueIdentifier>{5421a8f7-e2ac-40b9-84aa-fa255f7c6317}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="math">
+      <UniqueIdentifier>{d032c7cc-2d0b-4648-b315-1061f83bee37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="collection">
+      <UniqueIdentifier>{31ea3fb6-ad47-4864-bd3a-fc53decdf05d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="renderer">
+      <UniqueIdentifier>{b098c575-aa96-4896-be9e-67fc5602731a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="logging">
+      <UniqueIdentifier>{3a4493eb-a189-479d-92b5-a40eb334253f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resources">
+      <UniqueIdentifier>{b5bc149b-bbc2-49a4-bd55-762049c9ace6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external">
+      <UniqueIdentifier>{227ae3f3-713c-4abc-97da-44473c52dafd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\glew-1.7.0">
+      <UniqueIdentifier>{1e45e727-b622-4797-b68a-f6cd56a687bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shaders">
+      <UniqueIdentifier>{a392d3f9-400d-4d1e-82dd-fb382aabde78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shaders\glsl">
+      <UniqueIdentifier>{eedf2e96-a81f-465a-9232-b5014e4ad895}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="system\utf8.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="system\types.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\Window.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="math\rect2d.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\RenderContext.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\WGLRenderContext.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\WGLWindow.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\Camera.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\Entity.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="math\vector.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\matrix.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="math\util.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\Transform.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\Renderer.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\RenderTarget.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\Scene.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\GLRenderer.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="resources\ModelLoader.h">
+      <Filter>resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resources\ModelResource.h">
+      <Filter>resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resources\PrimitiveLoader.h">
+      <Filter>resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resources\Resource.h">
+      <Filter>resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resources\ResourceLoader.h">
+      <Filter>resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resources\TextureLoader.h">
+      <Filter>resources</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\Renderable.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="resources\Material.h">
+      <Filter>resources</Filter>
+    </ClInclude>
+    <ClInclude Include="external\glew-1.7.0\include\GL\glew.h">
+      <Filter>external\glew-1.7.0</Filter>
+    </ClInclude>
+    <ClInclude Include="external\glew-1.7.0\include\GL\glxew.h">
+      <Filter>external\glew-1.7.0</Filter>
+    </ClInclude>
+    <ClInclude Include="external\glew-1.7.0\include\GL\wglew.h">
+      <Filter>external\glew-1.7.0</Filter>
+    </ClInclude>
+    <ClInclude Include="system\io.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="resources\ShaderLoader.h">
+      <Filter>resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resources\GLSLLoader.h">
+      <Filter>resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resources\VertexShaderResource.h">
+      <Filter>resources</Filter>
+    </ClInclude>
+    <ClInclude Include="resources\FragmentShaderResource.h">
+      <Filter>resources</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="renderer\Window.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="math\rect2d.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\RenderContext.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\WGLRenderContext.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\WGLWindow.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\Transform.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\Renderer.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\GLRenderer.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="resources\ModelLoader.cpp">
+      <Filter>resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resources\ModelResource.cpp">
+      <Filter>resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resources\PrimitiveLoader.cpp">
+      <Filter>resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resources\Resource.cpp">
+      <Filter>resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resources\ResourceLoader.cpp">
+      <Filter>resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resources\TextureLoader.cpp">
+      <Filter>resources</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\Renderable.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="system\io.cpp">
+      <Filter>system</Filter>
+    </ClCompile>
+    <ClCompile Include="resources\ShaderLoader.cpp">
+      <Filter>resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resources\GLSLLoader.cpp">
+      <Filter>resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resources\VertexShaderResource.cpp">
+      <Filter>resources</Filter>
+    </ClCompile>
+    <ClCompile Include="resources\Material.cpp">
+      <Filter>resources</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\Scene.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="math\matrix.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="resources\FragmentShaderResource.cpp">
+      <Filter>resources</Filter>
+    </ClCompile>
+    <ClCompile Include="renderer\Camera.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\glsl\default.frag">
+      <Filter>shaders\glsl</Filter>
+    </None>
+    <None Include="shaders\glsl\default.vert">
+      <Filter>shaders\glsl</Filter>
+    </None>
+  </ItemGroup>
+</Project>

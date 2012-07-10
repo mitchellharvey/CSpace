@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="external\glew-1.7.0\include\GL\glew.h" />
+    <ClInclude Include="external\glew-1.7.0\include\GL\glxew.h" />
+    <ClInclude Include="external\glew-1.7.0\include\GL\wglew.h" />
+    <ClInclude Include="math\matrix.h" />
+    <ClInclude Include="math\rect2d.h" />
+    <ClInclude Include="math\util.h" />
+    <ClInclude Include="math\vector.h" />
+    <ClInclude Include="renderer\Camera.h" />
+    <ClInclude Include="renderer\Entity.h" />
+    <ClInclude Include="renderer\GLRenderer.h" />
+    <ClInclude Include="renderer\Renderable.h" />
+    <ClInclude Include="renderer\RenderContext.h" />
+    <ClInclude Include="renderer\Renderer.h" />
+    <ClInclude Include="renderer\RenderTarget.h" />
+    <ClInclude Include="renderer\Scene.h" />
+    <ClInclude Include="renderer\Transform.h" />
+    <ClInclude Include="renderer\WGLWindow.h" />
+    <ClInclude Include="renderer\WGLRenderContext.h" />
+    <ClInclude Include="renderer\Window.h" />
+    <ClInclude Include="resources\FragmentShaderResource.h" />
+    <ClInclude Include="resources\GLSLLoader.h" />
+    <ClInclude Include="resources\Material.h" />
+    <ClInclude Include="resources\ModelLoader.h" />
+    <ClInclude Include="resources\ModelResource.h" />
+    <ClInclude Include="resources\PrimitiveLoader.h" />
+    <ClInclude Include="resources\Resource.h" />
+    <ClInclude Include="resources\ResourceLoader.h" />
+    <ClInclude Include="resources\ShaderLoader.h" />
+    <ClInclude Include="resources\VertexShaderResource.h" />
+    <ClInclude Include="resources\TextureLoader.h" />
+    <ClInclude Include="system\io.h" />
+    <ClInclude Include="system\types.h" />
+    <ClInclude Include="system\utf8.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="math\matrix.cpp" />
+    <ClCompile Include="math\rect2d.cpp" />
+    <ClCompile Include="renderer\Camera.cpp" />
+    <ClCompile Include="renderer\GLRenderer.cpp" />
+    <ClCompile Include="renderer\Renderable.cpp" />
+    <ClCompile Include="renderer\RenderContext.cpp" />
+    <ClCompile Include="renderer\Renderer.cpp" />
+    <ClCompile Include="renderer\Scene.cpp" />
+    <ClCompile Include="renderer\Transform.cpp" />
+    <ClCompile Include="renderer\WGLWindow.cpp" />
+    <ClCompile Include="renderer\WGLRenderContext.cpp" />
+    <ClCompile Include="renderer\Window.cpp" />
+    <ClCompile Include="resources\FragmentShaderResource.cpp" />
+    <ClCompile Include="resources\GLSLLoader.cpp" />
+    <ClCompile Include="resources\Material.cpp" />
+    <ClCompile Include="resources\ModelLoader.cpp" />
+    <ClCompile Include="resources\ModelResource.cpp" />
+    <ClCompile Include="resources\PrimitiveLoader.cpp" />
+    <ClCompile Include="resources\Resource.cpp" />
+    <ClCompile Include="resources\ResourceLoader.cpp" />
+    <ClCompile Include="resources\ShaderLoader.cpp" />
+    <ClCompile Include="resources\VertexShaderResource.cpp" />
+    <ClCompile Include="resources\TextureLoader.cpp" />
+    <ClCompile Include="system\io.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\glsl\default.frag">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="shaders\glsl\default.vert">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{C7571B1F-F373-45B1-96A0-7077F7A69305}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>engine</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)deploy\</OutDir>
+    <IntDir>$(SolutionDir)build\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)_d</TargetName>
+    <CustomBuildAfterTargets>Build</CustomBuildAfterTargets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)deploy\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IntDir>$(SolutionDir)build\$(Configuration)\</IntDir>
+    <CustomBuildAfterTargets>Build</CustomBuildAfterTargets>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)/external/glew-1.7.0/include;$(SolutionDir)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <BuildLog>
+      <Path>$(IntDir)\build.log</Path>
+    </BuildLog>
+    <Lib>
+      <AdditionalDependencies>opengl32.lib;glew32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\stuff\programming\engine\external\glew-1.7.0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+    <PreLinkEvent>
+      <Command>
+      </Command>
+    </PreLinkEvent>
+    <CustomBuildStep>
+      <Command>copy $(SolutionDir)shaders\glsl\*.* $(OutDir)
+copy $(SolutionDir)\external\glew-1.7.0\bin\glew32.dll $(OutDir)</Command>
+      <Message>Copy Engine Files</Message>
+      <Outputs>$(OutDir)/glew32.dll;$(OutDir)/default.frag;$(OutDir)/default.vert;%(Outputs)</Outputs>
+    </CustomBuildStep>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)/external/glew-1.7.0/include;$(SolutionDir)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <BuildLog>
+      <Path>$(IntDir)\build.log</Path>
+    </BuildLog>
+    <Lib>
+      <AdditionalDependencies>opengl32.lib;glew32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\stuff\programming\engine\external\glew-1.7.0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+    <CustomBuildStep>
+      <Command>copy $(SolutionDir)shaders\glsl\*.* $(OutDir)</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Message>Copy Engine Files</Message>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>$(OutDir)/glew32.dll;$(OutDir)/default.frag;$(OutDir)/default.vert;%(Outputs)</Outputs>
+    </CustomBuildStep>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
