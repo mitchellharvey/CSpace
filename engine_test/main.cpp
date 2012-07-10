@@ -20,8 +20,6 @@ using namespace engine::system;
 using namespace engine::renderer;
 using namespace engine::resources;
 
-#pragma comment(lib,"opengl32.lib")
-
 ostream &operator<<(ostream &os, const vector3 &v)
 {
     os << "(" << v.x << ", " << v.y << ", " << v.z << ")";
@@ -120,8 +118,8 @@ int main(char **argv, int argc)
     cam.SetWidthHeightRatio( pWindow->GetSize().x / pWindow->GetSize().y );
 
     // Load resources and setup a scene
-    VertexShaderResource *vertShader = ResourceLoader::LoadVertexShader("..\\shaders\\glsl\\default.vert", GLSLLoader());
-    FragmentShaderResource *fragShader = ResourceLoader::LoadFragmentShader("..\\shaders\\glsl\\default.frag", GLSLLoader());
+    VertexShaderResource *vertShader = ResourceLoader::LoadVertexShader("default.vert", GLSLLoader());
+    FragmentShaderResource *fragShader = ResourceLoader::LoadFragmentShader("default.frag", GLSLLoader());
 
     ModelResource *triangle = ResourceLoader::LoadModel("test", PrimitiveLoader(PrimitiveLoader::TRIANGLE));
 

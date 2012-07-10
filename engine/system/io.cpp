@@ -19,8 +19,8 @@ IORESULT ReadFileText(const system::utf8 &filename, system::utf8 &output)
     IORESULT res = IO_OK;
 
     // TODO: Account for different file encodings
-
-    FILE *file = fopen(filename.c_str(), "r");
+    FILE *file = 0;
+    fopen_s(&file, filename.c_str(), "r");
     if (file)
     {
         output.clear();

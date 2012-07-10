@@ -62,13 +62,14 @@ FragmentShaderResource *ResourceLoader::LoadFragmentShader(const system::utf8 &f
     {
         resource = new FragmentShaderResource(filename);
 
-        loader.LoadShader(filename);
+        if (loader.LoadShader(filename))
+        {
+            resource->_shaderSourceByteSize = loader.GetShaderSourceSize() + 1;
+            resource->_shaderSource = new char[resource->_shaderSourceByteSize];
+            memcpy(resource->_shaderSource, loader.GetShaderSource(), resource->_shaderSourceByteSize);
 
-        resource->_shaderSourceByteSize = loader.GetShaderSourceSize() + 1;
-        resource->_shaderSource = new char[resource->_shaderSourceByteSize];
-        memcpy(resource->_shaderSource, loader.GetShaderSource(), resource->_shaderSourceByteSize);
-
-        loader.UnloadShader();
+            loader.UnloadShader();
+        }
     
         _sResourceMap.insert(StringToResourcePair(filename, resource));
     }
@@ -83,17 +84,18 @@ VertexShaderResource *ResourceLoader::LoadVertexShader(const system::utf8 &filen
     {
         resource = new VertexShaderResource(filename);
 
-        loader.LoadShader(filename);
+        if (loader.LoadShader(filename))
+        {
+            resource->_shaderSourceByteSize = loader.GetShaderSourceSize() + 1;
+            resource->_shaderSource = new char[resource->_shaderSourceByteSize];
+            memcpy(resource->_shaderSource, loader.GetShaderSource(), resource->_shaderSourceByteSize);
 
-        resource->_shaderSourceByteSize = loader.GetShaderSourceSize() + 1;
-        resource->_shaderSource = new char[resource->_shaderSourceByteSize];
-        memcpy(resource->_shaderSource, loader.GetShaderSource(), resource->_shaderSourceByteSize);
+            resource->SetVertexAttribName("position");
+            resource->SetNormalAttribName("normal");
+            resource->SetColorAttribName("color");
 
-        resource->SetVertexAttribName("position");
-        resource->SetNormalAttribName("normal");
-        resource->SetColorAttribName("color");
-
-        loader.UnloadShader();
+            loader.UnloadShader();
+        }
     
         _sResourceMap.insert(StringToResourcePair(filename, resource));
     }

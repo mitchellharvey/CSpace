@@ -1,0 +1,16 @@
+*.opensdf
+*.sdf
+*.suo
+*.opensdf
+*.pdb
+*.exe
+*.dll
+*.obj
+*.ipch
+*.tlog
+*.log
+*.vcxproj.user
+*.manifest
+*.manifest.res
+*.lastbuildstate
+*.rc

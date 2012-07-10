@@ -107,13 +107,13 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)deploy\</OutDir>
+    <OutDir>$(SolutionDir)\..\deploy\</OutDir>
     <IntDir>$(SolutionDir)build\$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)_d</TargetName>
     <CustomBuildAfterTargets>Build</CustomBuildAfterTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)deploy\</OutDir>
+    <OutDir>$(SolutionDir)\..\deploy\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IntDir>$(SolutionDir)build\$(Configuration)\</IntDir>
@@ -131,6 +131,7 @@
       <ExceptionHandling>Async</ExceptionHandling>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -141,7 +142,7 @@
     </BuildLog>
     <Lib>
       <AdditionalDependencies>opengl32.lib;glew32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\stuff\programming\engine\external\glew-1.7.0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)\external\glew-1.7.0\lib</AdditionalLibraryDirectories>
     </Lib>
     <PreLinkEvent>
       <Command>
@@ -149,10 +150,13 @@
     </PreLinkEvent>
     <CustomBuildStep>
       <Command>copy $(SolutionDir)shaders\glsl\*.* $(OutDir)
-copy $(SolutionDir)\external\glew-1.7.0\bin\glew32.dll $(OutDir)</Command>
+copy $(SolutionDir)external\glew-1.7.0\bin\glew32.dll $(OutDir)</Command>
       <Message>Copy Engine Files</Message>
       <Outputs>$(OutDir)/glew32.dll;$(OutDir)/default.frag;$(OutDir)/default.vert;%(Outputs)</Outputs>
     </CustomBuildStep>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -168,6 +172,7 @@ copy $(SolutionDir)\external\glew-1.7.0\bin\glew32.dll $(OutDir)</Command>
       <ExceptionHandling>Async</ExceptionHandling>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -180,10 +185,11 @@ copy $(SolutionDir)\external\glew-1.7.0\bin\glew32.dll $(OutDir)</Command>
     </BuildLog>
     <Lib>
       <AdditionalDependencies>opengl32.lib;glew32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\stuff\programming\engine\external\glew-1.7.0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)\external\glew-1.7.0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <CustomBuildStep>
-      <Command>copy $(SolutionDir)shaders\glsl\*.* $(OutDir)</Command>
+      <Command>copy $(SolutionDir)shaders\glsl\*.* $(OutDir)
+copy $(SolutionDir)external\glew-1.7.0\bin\glew32.dll $(OutDir)</Command>
     </CustomBuildStep>
     <CustomBuildStep>
       <Message>Copy Engine Files</Message>
@@ -191,6 +197,9 @@ copy $(SolutionDir)\external\glew-1.7.0\bin\glew32.dll $(OutDir)</Command>
     <CustomBuildStep>
       <Outputs>$(OutDir)/glew32.dll;$(OutDir)/default.frag;$(OutDir)/default.vert;%(Outputs)</Outputs>
     </CustomBuildStep>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
