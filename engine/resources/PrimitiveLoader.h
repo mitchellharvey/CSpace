@@ -32,12 +32,11 @@ public:
 
     virtual void UnloadModel();
 
-protected:
+private:
     PrimitiveLoader(const PrimitiveLoader &);
 
-    // TODO: Paramter struct!
-    virtual void CopyData(const math::vector3 *vertices, const math::vector3 *normals, const system::UINT32 *indices, const math::vector2 *uvs,
-                          const math::vector4 *colors, system::UINT32 vertexCount, system::UINT32 normalCount, system::UINT32 indexCount, system::UINT32 uvCount, system::UINT32 colorCount);
+    void CreateTriangle(void);
+    void CreateCube(void);
 
     PRIMITIVE _type;
     

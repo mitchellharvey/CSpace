@@ -19,7 +19,7 @@ using namespace engine::system;
 namespace engine {
 namespace renderer {
 
-typedef void(*WindowMessageCB)(system::UINT32);
+typedef void(*WindowMessageCB)(system::UINT32, system::UINT64, system::UINT64);
 
 class RenderContext;
 

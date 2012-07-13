@@ -203,12 +203,22 @@ static inline float MagnitudeSquared(const vector3 &v)
     return v.x * v.x + v.y * v.y + v.z * v.z;
 }
 
+static inline float MagnitudeSquared(const vector2 &v)
+{
+    return v.x * v.x + v.y * v.y;
+}
+
 static inline float Magnitude(const vector3 &v)
 {
     return sqrt(MagnitudeSquared(v));
 }
 
-static inline void Normalize(vector3 &v)
+static inline float Magnitude(const vector2 &v)
+{
+    return sqrt(MagnitudeSquared(v));
+}
+
+static inline vector3 &Normalize(vector3 &v)
 {
     float len = Magnitude(v);
 
@@ -216,6 +226,20 @@ static inline void Normalize(vector3 &v)
         len = 1;
 
     v = v * (1.0f / len);
+
+    return v;
+}
+
+static inline vector2 &Normalize(vector2 &v)
+{
+    float len = Magnitude(v);
+
+    if (len == 0)
+        len = 1;
+
+    v = v * (1.0f / len);
+
+    return v;
 }
 
 } // math

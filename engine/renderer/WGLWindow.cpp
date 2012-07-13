@@ -215,7 +215,7 @@ LRESULT CALLBACK WGLWindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 {
     if (Window::_sCallbackMap.find(static_cast<void *>(hWnd)) != Window::_sCallbackMap.end())
     {
-        Window::_sCallbackMap[static_cast<void *>(hWnd)](msg);
+        Window::_sCallbackMap[static_cast<void *>(hWnd)](msg, wParam, lParam);
     }
     return DefWindowProc(hWnd, msg, wParam, lParam);
 }
