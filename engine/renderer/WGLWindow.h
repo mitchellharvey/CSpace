@@ -24,7 +24,7 @@ protected:
     void EnableRenderTarget(void);
     void DisableRenderTarget(void);
 private:
-    WGLWindow(HINSTANCE hInstance, HWND hWnd, RenderContext *pRC);
+    WGLWindow(HINSTANCE hInstance, HWND hWnd, HDC hDC, RenderContext *pRC);
     WGLWindow(const WGLWindow &) { }
     ~WGLWindow(void);
     
@@ -37,6 +37,7 @@ private:
 
     HINSTANCE _hInstance;
     HWND _hWnd;
+    HDC _hDC;
 
 };
 } // renderer

@@ -12,7 +12,7 @@ out vec4 Color;
 void main(void)
 {
     gl_Position = projMatrix * modelViewMatrix * vec4(position, 1.0f);
-    Color = vec4(color.rgb, 0.0f);
+    Color = vec4(color.rgb, 1.0f);
 
     //gl_Position = gl_ModelViewProjectionMatrix * vec4(position, 1.0f);
     //gl_Position = gl_ProjectionMatrix * gl_ModelViewMatrix * vec4(position, 1.0f);

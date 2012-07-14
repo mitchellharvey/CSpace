@@ -124,8 +124,6 @@ void GLRenderer::ImplementationRenderScene(Camera *camera, Scene *pScene)
         pScene->GetSortedRenderables(renderables);
     }
 
-    
-
     std::vector<Renderable>::iterator it = renderables.begin();
     std::vector<Renderable>::iterator end = renderables.end();
     for(; it != end; ++it)
@@ -139,7 +137,6 @@ void GLRenderer::ImplementationRenderScene(Camera *camera, Scene *pScene)
 
         RenderModel(mdata);
     }
-
 }
 //------------------------------------------------------------------------------------------------------------------------
 GLRenderer::ShaderProgram &GLRenderer::LinkShaderProgram(VertexShaderResource *vertShader, FragmentShaderResource *fragShader)

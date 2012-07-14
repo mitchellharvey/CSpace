@@ -42,7 +42,7 @@ matrix4x4 &Transform::GetTransformMatrix(void)
 //------------------------------------------------------------------------------------------------------------------------
 vector3 Transform::GetTranslation(void) const
 {
-    return vector3(_transform._14, _transform._24, _transform._34);
+    return vector3(_transform.m14, _transform.m24, _transform.m34);
 }
 //------------------------------------------------------------------------------------------------------------------------
 vector3 Transform::GetXAxis(void) const
@@ -62,16 +62,16 @@ vector3 Transform::GetZAxis(void) const
 //------------------------------------------------------------------------------------------------------------------------
 void Transform::SetTranslation(const vector3 &t)
 {
-    _transform._14 = t.x;
-    _transform._24 = t.y;
-    _transform._34 = t.z;
+    _transform.m14 = t.x;
+    _transform.m24 = t.y;
+    _transform.m34 = t.z;
 }
 //------------------------------------------------------------------------------------------------------------------------
 void Transform::SetTranslation(float x, float y, float z)
 {
-    _transform._14 = x;
-    _transform._24 = y;
-    _transform._34 = z;
+    _transform.m14 = x;
+    _transform.m24 = y;
+    _transform.m34 = z;
 }
 //------------------------------------------------------------------------------------------------------------------------
 void Transform::SetXAxis(float x, float y, float z)
@@ -160,6 +160,28 @@ void Transform::LookAt(const vector3 &p)
 void Transform::LookAt(float x, float y, float z)
 {
     LookAt(vector3(x, y, z));
+}
+//------------------------------------------------------------------------------------------------------------------------
+void Transform::RotateOnX(float radians)
+{
+}
+//------------------------------------------------------------------------------------------------------------------------
+void Transform::RotateOnY(float radians)
+{
+    return;
+    matrix4x4 rotation;
+    float s = sin(radians);
+    float c = cos(radians);
+    rotation.m11 = c;
+    rotation.m13 = -s;
+    rotation.m31 = s;
+    rotation.m33 = c;
+
+    _transform = rotation * _transform;
+}
+//------------------------------------------------------------------------------------------------------------------------
+void Transform::RotateOnZ(float radians)
+{
 }
 } // renderer
 } // engine

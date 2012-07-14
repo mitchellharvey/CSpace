@@ -117,7 +117,7 @@ Window *CreateNewWindow(void)
     }
 
     RenderContext *pRC = new WGLRenderContext(hGLRC);
-    WGLWindow *pWindow = new WGLWindow(hInstance, hWnd, pRC);
+    WGLWindow *pWindow = new WGLWindow(hInstance, hWnd, hDC, pRC);
 
     pWindow->Hide();
     pWindow->SetPosition(pWindow->GetPosition());
@@ -128,15 +128,17 @@ Window *CreateNewWindow(void)
 //------------------------------------------------------------------------------------------------------------------------
 void DestroyWindow(Window *pWindow)
 {
+    WGLWindow *pWGLWindow = (WGLWindow *)pWindow;
+
     char wndClassName[256] = {0};
-    HWND hWnd = static_cast<HWND>(pWindow->GetHandle());
+    HWND hWnd = static_cast<HWND>(pWGLWindow->_hWnd);
     GetClassName(hWnd, wndClassName, 256); 
 
-    WGLRenderContext *pRC = (WGLRenderContext *)pWindow->GetRenderContext();
+    WGLRenderContext *pRC = (WGLRenderContext *)pWGLWindow->_pRenderContext;
     wglMakeCurrent(NULL, NULL);
     wglDeleteContext(pRC->_hGLRC);
 
-    ReleaseDC(hWnd, GetDC(hWnd));
+    ReleaseDC(hWnd, pWGLWindow->_hDC);
     ::DestroyWindow(hWnd);
     UnregisterClass(wndClassName, GetModuleHandle(NULL));
 
@@ -144,9 +146,10 @@ void DestroyWindow(Window *pWindow)
     delete (WGLWindow *)(pWindow);
 }
 //------------------------------------------------------------------------------------------------------------------------
-WGLWindow::WGLWindow(HINSTANCE hInstance, HWND hWnd, RenderContext *pRC) :
+WGLWindow::WGLWindow(HINSTANCE hInstance, HWND hWnd, HDC hDC, RenderContext *pRC) :
   _hInstance(hInstance)
  ,_hWnd(hWnd)
+ ,_hDC(hDC)
 {
     _pRenderContext = pRC;
 }
@@ -157,14 +160,13 @@ WGLWindow::~WGLWindow(void)
 //------------------------------------------------------------------------------------------------------------------------
 void WGLWindow::EnableRenderTarget(void)
 {
-    _pRenderContext->Bind(GetDC(static_cast<HWND>(GetHandle())));
+    _pRenderContext->Bind(_hDC);
 }
 //------------------------------------------------------------------------------------------------------------------------
 void WGLWindow::DisableRenderTarget(void)
 {
-    HDC hDC = GetDC(static_cast<HWND>(GetHandle()));
-    SwapBuffers(hDC);
-    _pRenderContext->Unbind(hDC);
+    SwapBuffers(_hDC);
+    _pRenderContext->Unbind(_hDC);
 }
 //------------------------------------------------------------------------------------------------------------------------
 void WGLWindow::ImplementationSetWindowTitle(const system::utf8 &title)

@@ -41,6 +41,10 @@ public:
     void ScaleYAxis(float s);
     void ScaleZAxis(float s);
 
+    void RotateOnX(float radians);
+    void RotateOnY(float radians);
+    void RotateOnZ(float radians);
+
     void LookAt(const vector3 &p);
     void LookAt(float x, float y, float z);
 

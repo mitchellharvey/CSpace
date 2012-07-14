@@ -74,9 +74,9 @@ matrix4x4 Camera::GetProjectionMatrix(void) const
     proj.m11 = f / _widthHeightRatio;
     proj.m22 = f;
     proj.m33 = (_farPlane + _nearPlane) / (_nearPlane - _farPlane);
-    proj._34 = (2.0f * _farPlane * _nearPlane) / (_nearPlane - _farPlane);
-    proj._43 = -1.0f;
-    proj._44 = 0.0f;
+    proj.m34 = (2.0f * _farPlane * _nearPlane) / (_nearPlane - _farPlane);
+    proj.m43 = -1.0f;
+    proj.m44 = 0.0f;
 
     return proj;
 }
