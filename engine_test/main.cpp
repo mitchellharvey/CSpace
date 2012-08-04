@@ -46,7 +46,7 @@ void MyCB(system::UINT32 msg, system::UINT64 wParam, system::UINT64 lParam)
     }
 }
 
-void UpdateCamera(Camera &cam, float delta)
+void UpdateCamera(Camera &cam, Renderable &renderable, float delta)
 {
     static vector2 lastMousePos = g_mousePos;
 
@@ -57,14 +57,19 @@ void UpdateCamera(Camera &cam, float delta)
         {
             diff = Normalize(diff) * delta;
 
-            //cam.RotateLocalX(diff.y);
+            cam.RotateLocalX(diff.y);
             //cam.RotateLocalY(diff.x);
-            cam.RotateWorldY(diff.x);
+            //cam.RotateWorldY(diff.x);
+            //renderable.RotateWorldX(diff.y);
+            //renderable.RotateWorldY(diff.x);
         }
     }
     lastMousePos = g_mousePos;
 
     const float moveSpeed = 0.1f;
+    //vector3 pos = renderable.GetTranslation();//cam.GetTranslation();
+    //vector3 z = renderable.GetZAxis();//cam.GetZAxis();
+    //vector3 x = renderable.GetXAxis();//cam.GetXAxis();
     vector3 pos = cam.GetTranslation();
     vector3 z = cam.GetZAxis();
     vector3 x = cam.GetXAxis();
@@ -87,6 +92,7 @@ void UpdateCamera(Camera &cam, float delta)
     }
 
     cam.SetTranslation(pos);
+    //renderable.SetTranslation(pos);
 
    /* if (GetAsyncKeyState(VK_UP))
     {
@@ -158,7 +164,7 @@ int main(char **argv, int argc)
         pWindow->ProcessMessages();
         pRenderer->RenderScene(pWindow, &cam, &scene);
 
-        UpdateCamera(cam, delta);
+        UpdateCamera(cam, cube, delta);
 
         if (GetAsyncKeyState(VK_UP))
         {

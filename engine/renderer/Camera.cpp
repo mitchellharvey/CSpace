@@ -103,13 +103,15 @@ matrix4x4 Camera::GetViewMatrix(void) const
     view.m32 = _transform.m23;
     view.m33 = _transform.m33;
     view.m43 =  0.0f;
- 
-    view.m14 = -_transform.m14;
-    view.m24 = -_transform.m24;
-    view.m34 = -_transform.m34;
-    view.m44 = 1.0f;
 
-    return view;
+    matrix4x4 trans;
+ 
+    trans.m14 = -_transform.m14;
+    trans.m24 = -_transform.m24;
+    trans.m34 = -_transform.m34;
+    trans.m44 = 1.0f;
+
+    return view * trans;
 }
 } // renderer
 } // engine
