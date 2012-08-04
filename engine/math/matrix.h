@@ -16,6 +16,8 @@ namespace engine {
 namespace math {
 
 using system::BYTE;
+
+struct vector3;
     
 struct matrix3x3
 {
@@ -199,6 +201,13 @@ struct matrix4x4
     }
 };
 
+matrix4x4 RotationMatrixX(float radians);
+matrix4x4 RotationMatrixY(float radians);
+matrix4x4 RotationMatrixZ(float radians);
+
+matrix4x4 RotationMatrix(float radians, const vector3 &axis);
+
+matrix4x4 InverseMatrix(const matrix4x4 &m);
 
 } // math
 } // engine

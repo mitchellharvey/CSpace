@@ -139,22 +139,25 @@ void Transform::ScaleZAxis(float s)
 //------------------------------------------------------------------------------------------------------------------------
 void Transform::LookAt(const vector3 &p)
 {
-    static vector3 worldUp(0.0f, 1.0f, 0.0f);
+    static const vector3 worldUp(0.0f, 1.0f, 0.0f);
 
     vector3 newForward, newUp, newRight;
 
     newForward = p - GetTranslation();
-    Normalize(newForward);
+    if (MagnitudeSquared(newForward) != 0.0f)
+    {
+        Normalize(newForward);
 
-    newRight = CrossProduct(newForward, worldUp);
-    Normalize(newRight);
+        newRight = CrossProduct(newForward, worldUp);
+        Normalize(newRight);
     
-    newUp = CrossProduct(newRight, newForward);
-    Normalize(newUp);
+        newUp = CrossProduct(newRight, newForward);
+        Normalize(newUp);
 
-    SetXAxis(newRight);
-    SetYAxis(newUp);
-    SetZAxis(newForward);
+        SetXAxis(newRight);
+        SetYAxis(newUp);
+        SetZAxis(newForward);
+    }
 }
 //------------------------------------------------------------------------------------------------------------------------
 void Transform::LookAt(float x, float y, float z)
@@ -162,26 +165,102 @@ void Transform::LookAt(float x, float y, float z)
     LookAt(vector3(x, y, z));
 }
 //------------------------------------------------------------------------------------------------------------------------
-void Transform::RotateOnX(float radians)
+void Transform::RotateLocalX(float radians)
+{
+    // X Rotation Matrix
+    //float s = sin(radians);
+    //float c = cos(radians);
+    //rotation.m22 = c;
+    //rotation.m23 = s;
+    //rotation.m32 = -s;
+    //rotation.m33 = c;
+
+    matrix4x4 curRot;
+    curRot.m11 = _transform.m11;
+    curRot.m21 = _transform.m21;
+    curRot.m31 = _transform.m31;
+    curRot.m12 = _transform.m12;
+    curRot.m22 = _transform.m22;
+    curRot.m32 = _transform.m32;
+    curRot.m13 = _transform.m13;
+    curRot.m23 = _transform.m23;
+    curRot.m33 = _transform.m33;
+
+    matrix4x4 rotation = RotationMatrixX(radians);
+    rotation = rotation * curRot;
+    
+    vector3 trans = GetTranslation();
+    _transform = rotation;
+    _transform.m14 = trans.x;
+    _transform.m24 = trans.y;
+    _transform.m34 = trans.z;
+
+}
+//------------------------------------------------------------------------------------------------------------------------
+void Transform::RotateLocalY(float radians)
+{
+    //// Y Rotation matrix
+    //float s = sin(radians);
+    //float c = cos(radians);
+    //rotation.m11 = c;
+    //rotation.m13 = s;
+    //rotation.m31 = -s;
+    //rotation.m33 = c;
+
+    matrix4x4 curRot;
+    curRot.m11 = _transform.m11;
+    curRot.m21 = _transform.m21;
+    curRot.m31 = _transform.m31;
+    curRot.m12 = _transform.m12;
+    curRot.m22 = _transform.m22;
+    curRot.m32 = _transform.m32;
+    curRot.m13 = _transform.m13;
+    curRot.m23 = _transform.m23;
+    curRot.m33 = _transform.m33;
+
+    matrix4x4 rotation = RotationMatrixY(radians);
+    rotation = rotation * curRot;
+    
+    vector3 trans = GetTranslation();
+    _transform = rotation;
+    _transform.m14 = trans.x;
+    _transform.m24 = trans.y;
+    _transform.m34 = trans.z;
+}
+//------------------------------------------------------------------------------------------------------------------------
+void Transform::RotateLocalZ(float radians)
 {
 }
 //------------------------------------------------------------------------------------------------------------------------
-void Transform::RotateOnY(float radians)
+void Transform::RotateWorldX(float radians)
 {
-    return;
-    matrix4x4 rotation;
+    matrix4x4 rotation;// = RotationMatrix(radians, 0.0f, 0.0f);
+
     float s = sin(radians);
     float c = cos(radians);
-    rotation.m11 = c;
-    rotation.m13 = -s;
-    rotation.m31 = s;
+    rotation.m22 = c;
+    rotation.m23 = s;
+    rotation.m32 = -s;
     rotation.m33 = c;
 
-    _transform = rotation * _transform;
+   _transform = rotation * _transform;
 }
 //------------------------------------------------------------------------------------------------------------------------
-void Transform::RotateOnZ(float radians)
+void Transform::RotateWorldY(float radians)
 {
+    matrix4x4 curRot;
+    curRot.m11 = _transform.m11;
+    curRot.m21 = _transform.m21;
+    curRot.m31 = _transform.m31;
+    curRot.m12 = _transform.m12;
+    curRot.m22 = _transform.m22;
+    curRot.m32 = _transform.m32;
+    curRot.m13 = _transform.m13;
+    curRot.m23 = _transform.m23;
+    curRot.m33 = _transform.m33;
+
+    matrix4x4 rotation = RotationMatrixY(radians);
+    _transform = rotation * _transform;
 }
 } // renderer
 } // engine

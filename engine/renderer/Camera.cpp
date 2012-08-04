@@ -87,11 +87,29 @@ matrix4x4 Camera::GetViewMatrix(void) const
     // http://www.lighthouse3d.com/cg-topics/code-samples/opengl-3-3-glsl-1-5-sample/
     //
 
-    Transform view(*this);
-    view.ScaleZAxis(-1.0f);
-    view.SetTranslation(GetTranslation() * -1.0f);
+    matrix4x4 view;
 
-    return view.GetTransformMatrix();
+    view.m11 = _transform.m11;
+    view.m12 = _transform.m21;
+    view.m13 = _transform.m31;
+    view.m14 = 0.0f;
+ 
+    view.m21 = _transform.m12;
+    view.m22 = _transform.m22;
+    view.m23 = _transform.m32;
+    view.m24 = 0.0f;
+ 
+    view.m31 = _transform.m13;
+    view.m32 = _transform.m23;
+    view.m33 = _transform.m33;
+    view.m43 =  0.0f;
+ 
+    view.m14 = -_transform.m14;
+    view.m24 = -_transform.m24;
+    view.m34 = -_transform.m34;
+    view.m44 = 1.0f;
+
+    return view;
 }
 } // renderer
 } // engine

@@ -57,11 +57,56 @@ void UpdateCamera(Camera &cam, float delta)
         {
             diff = Normalize(diff) * delta;
 
-            cam.RotateOnY(diff.x);
+            //cam.RotateLocalX(diff.y);
+            //cam.RotateLocalY(diff.x);
+            cam.RotateWorldY(diff.x);
         }
     }
     lastMousePos = g_mousePos;
-    
+
+    const float moveSpeed = 0.1f;
+    vector3 pos = cam.GetTranslation();
+    vector3 z = cam.GetZAxis();
+    vector3 x = cam.GetXAxis();
+
+    if (GetAsyncKeyState('W'))
+    {
+        pos -= (z * (delta * moveSpeed));
+    }
+    if (GetAsyncKeyState('S'))
+    {
+        pos += (z * (delta * moveSpeed));
+    }
+    if (GetAsyncKeyState('D'))
+    {
+        pos += (x * (delta * moveSpeed));
+    }
+    if (GetAsyncKeyState('A'))
+    {
+        pos -= (x * (delta * moveSpeed));
+    }
+
+    cam.SetTranslation(pos);
+
+   /* if (GetAsyncKeyState(VK_UP))
+    {
+        cam.RotateLocalX(delta * moveSpeed);
+    }
+
+    if (GetAsyncKeyState(VK_DOWN))
+    {
+        cam.RotateLocalX(delta * -moveSpeed);
+    }
+
+    if (GetAsyncKeyState(VK_RIGHT))
+    {
+        cam.RotateLocalY(delta * moveSpeed);
+    }
+
+    if (GetAsyncKeyState(VK_LEFT))
+    {
+        cam.RotateLocalY(delta * -moveSpeed);
+    }*/
 }
 
 int main(char **argv, int argc)
@@ -69,8 +114,7 @@ int main(char **argv, int argc)
     Scene scene;
     Camera cam;
 
-    cam.SetTranslation(0.0f, 0.0f, 2.0f);
-    cam.LookAt(0.0f, 0.0f, 0.0f);
+    cam.SetTranslation(0.0f, 0.0f, 0.0f);
 
     engine::renderer::Window *pWindow = engine::renderer::CreateNewWindow();
     pWindow->SetMessageCallback(MyCB);
@@ -86,10 +130,10 @@ int main(char **argv, int argc)
 
 
     Renderable cube, triangle;
-    cube.SetTranslation(0.0f, 0.0f, -1.0f);
+    cube.SetTranslation(0.0f, 0.0f, -10.0f);
     cube.SetModelResource(cubeModel);
 
-    triangle.SetTranslation(-1.0f, -1.0f, -1.0f);
+    triangle.SetTranslation(0.0f, 0.0f, 1.0f);
     triangle.SetModelResource(triangleModel);
      
     Material *mat[] = { &(cube.GetMaterial()), &(triangle.GetMaterial()) };
@@ -102,13 +146,13 @@ int main(char **argv, int argc)
     }
 
     scene.AddRenderable(&cube);
-    scene.AddRenderable(&triangle);
+    //scene.AddRenderable(&triangle);
 
     engine::renderer::Renderer *pRenderer = engine::renderer::CreateNewRenderer();
     pRenderer->Initialize();
     pRenderer->UpdateViewPort(0, 0, pWindow->GetSize().x, pWindow->GetSize().y);
     float delta = 0.01f;
-    float moveSpeed = 0.01f;
+    float moveSpeed = 0.1f;
     while (!g_quit) 
     { 
         pWindow->ProcessMessages();
@@ -118,24 +162,50 @@ int main(char **argv, int argc)
 
         if (GetAsyncKeyState(VK_UP))
         {
-            triangle.SetTranslation(triangle.GetTranslation() + vector3(1.0f * delta, 0.0f, 0.0f));
+            cube.RotateLocalX(delta * moveSpeed);
         }
 
+        if (GetAsyncKeyState(VK_DOWN))
+        {
+            cube.RotateLocalX(delta * -moveSpeed);
+        }
+
+        if (GetAsyncKeyState(VK_RIGHT))
+        {
+            cube.RotateLocalY(delta * moveSpeed);
+        }
+
+        if (GetAsyncKeyState(VK_LEFT))
+        {
+            cube.RotateLocalY(delta * -moveSpeed);
+        }
+
+        const float moveSpeed = 0.1f;
         vector3 pos = cube.GetTranslation();
-        cube.SetTranslation(pos.x + moveSpeed, pos.y, pos.z);
+        vector3 z = cube.GetZAxis();
+        vector3 x = cube.GetXAxis();
 
-        if (pos.x > 1.0f )
+        if (GetAsyncKeyState('T'))
         {
-            moveSpeed *= -1.0f;
-            cube.SetTranslation(1.0f, pos.y, pos.z);
-        }
-        else if (pos.x < -1.0f )
-        {
-            moveSpeed *= -1.0f;
-            cube.SetTranslation(-1.0f, pos.y, pos.z);
+            pos -= (z * (delta * moveSpeed));
         }
 
+        if (GetAsyncKeyState('G'))
+        {
+            pos += (z * (delta * moveSpeed));
+        }
 
+        if (GetAsyncKeyState('H'))
+        {
+            pos += (x * (delta * moveSpeed));
+        }
+
+        if (GetAsyncKeyState('F'))
+        {
+            pos -= (x * (delta * moveSpeed));
+        }
+
+        cube.SetTranslation(pos);
     }
     engine::renderer::DestroyWindow(pWindow);
     return 0;

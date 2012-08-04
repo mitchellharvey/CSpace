@@ -222,10 +222,10 @@ static inline vector3 &Normalize(vector3 &v)
 {
     float len = Magnitude(v);
 
-    if (len == 0)
-        len = 1;
-
-    v = v * (1.0f / len);
+    if (len != 0.0f)
+    {
+        v = v * (1.0f / len);
+    }
 
     return v;
 }
@@ -234,10 +234,10 @@ static inline vector2 &Normalize(vector2 &v)
 {
     float len = Magnitude(v);
 
-    if (len == 0)
-        len = 1;
-
-    v = v * (1.0f / len);
+    if (len != 0.0f)
+    {
+        v = v * (1.0f / len);
+    }
 
     return v;
 }
