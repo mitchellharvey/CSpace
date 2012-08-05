@@ -81,18 +81,18 @@ struct matrix3x3
     inline const matrix3x3 operator*(const matrix3x3 &m) const
     {
         matrix3x3 prod;
-        // Row 1
-        prod.m11 = (this->m11 * m.m11) + (this->m12 * m.m21) + (this->m13 * m.m31);
-        prod.m12 = (this->m11 * m.m12) + (this->m12 * m.m22) + (this->m13 * m.m32);
-        prod.m13 = (this->m11 * m.m13) + (this->m12 * m.m23) + (this->m13 * m.m33);
-        // Row 2
-        prod.m21 = (this->m21 * m.m11) + (this->m22 * m.m21) + (this->m23 * m.m31);
-        prod.m22 = (this->m21 * m.m12) + (this->m22 * m.m22) + (this->m23 * m.m32);
-        prod.m23 = (this->m21 * m.m13) + (this->m22 * m.m23) + (this->m23 * m.m33);
-        // Row 3
-        prod.m31 = (this->m31 * m.m11) + (this->m32 * m.m21) + (this->m33 * m.m31);
-        prod.m32 = (this->m31 * m.m12) + (this->m32 * m.m22) + (this->m33 * m.m32);
-        prod.m33 = (this->m31 * m.m13) + (this->m32 * m.m23) + (this->m33 * m.m33);
+
+        prod.m11 = (this->m11 * m.m11) + (this->m21 * m.m12) + (this->m31 * m.m13);
+        prod.m21 = (this->m11 * m.m21) + (this->m21 * m.m22) + (this->m31 * m.m23);
+        prod.m31 = (this->m11 * m.m31) + (this->m21 * m.m32) + (this->m31 * m.m33);
+
+        prod.m12 = (this->m12 * m.m11) + (this->m22 * m.m12) + (this->m32 * m.m13);
+        prod.m22 = (this->m12 * m.m21) + (this->m22 * m.m22) + (this->m32 * m.m23);
+        prod.m32 = (this->m12 * m.m31) + (this->m22 * m.m32) + (this->m32 * m.m33);
+
+        prod.m13 = (this->m13 * m.m11) + (this->m23 * m.m12) + (this->m33 * m.m13);
+        prod.m23 = (this->m13 * m.m21) + (this->m23 * m.m22) + (this->m33 * m.m23);
+        prod.m33 = (this->m13 * m.m31) + (this->m23 * m.m32) + (this->m33 * m.m33);
 
         return prod;
     }
@@ -171,26 +171,26 @@ struct matrix4x4
     inline matrix4x4 operator*(const matrix4x4 &m) const
     {
         matrix4x4 prod;
-        // Row 1
-        prod.m11 = (this->m11 * m.m11) + (this->m12 * m.m21) + (this->m13 * m.m31) + (this->m14 * m.m41);
-        prod.m12 = (this->m11 * m.m12) + (this->m12 * m.m22) + (this->m13 * m.m32) + (this->m14 * m.m42);
-        prod.m13 = (this->m11 * m.m13) + (this->m12 * m.m23) + (this->m13 * m.m33) + (this->m14 * m.m43);
-        prod.m14 = (this->m11 * m.m14) + (this->m12 * m.m24) + (this->m13 * m.m34) + (this->m14 * m.m44);
-        // Row 2
-        prod.m21 = (this->m21 * m.m11) + (this->m22 * m.m21) + (this->m23 * m.m31) + (this->m24 * m.m41);
-        prod.m22 = (this->m21 * m.m12) + (this->m22 * m.m22) + (this->m23 * m.m32) + (this->m24 * m.m41);
-        prod.m23 = (this->m21 * m.m13) + (this->m22 * m.m23) + (this->m23 * m.m33) + (this->m24 * m.m41);
-        prod.m24 = (this->m21 * m.m14) + (this->m22 * m.m24) + (this->m23 * m.m34) + (this->m24 * m.m41);
-        // Row 3
-        prod.m31 = (this->m31 * m.m11) + (this->m32 * m.m21) + (this->m33 * m.m31) + (this->m34 * m.m41);
-        prod.m32 = (this->m31 * m.m12) + (this->m32 * m.m22) + (this->m33 * m.m32) + (this->m34 * m.m42);
-        prod.m33 = (this->m31 * m.m13) + (this->m32 * m.m23) + (this->m33 * m.m33) + (this->m34 * m.m43);
-        prod.m34 = (this->m31 * m.m14) + (this->m32 * m.m24) + (this->m33 * m.m34) + (this->m34 * m.m44);
-        // Row 4
-        prod.m41 = (this->m41 * m.m11) + (this->m42 * m.m21) + (this->m43 * m.m31) + (this->m44 * m.m41);
-        prod.m42 = (this->m41 * m.m12) + (this->m42 * m.m22) + (this->m43 * m.m32) + (this->m44 * m.m42);
-        prod.m43 = (this->m41 * m.m13) + (this->m42 * m.m23) + (this->m43 * m.m33) + (this->m44 * m.m43);
-        prod.m44 = (this->m41 * m.m14) + (this->m42 * m.m24) + (this->m43 * m.m34) + (this->m44 * m.m44);
+
+        prod.m11 = (this->m11 * m.m11) + (this->m21 * m.m12) + (this->m31 * m.m13) + (this->m41 * m.m14);
+        prod.m21 = (this->m11 * m.m21) + (this->m21 * m.m22) + (this->m31 * m.m23) + (this->m41 * m.m24);
+        prod.m31 = (this->m11 * m.m31) + (this->m21 * m.m32) + (this->m31 * m.m33) + (this->m41 * m.m34);
+        prod.m41 = (this->m11 * m.m41) + (this->m21 * m.m42) + (this->m31 * m.m43) + (this->m41 * m.m44);
+
+        prod.m12 = (this->m12 * m.m11) + (this->m22 * m.m12) + (this->m32 * m.m13) + (this->m42 * m.m14);
+        prod.m22 = (this->m12 * m.m21) + (this->m22 * m.m22) + (this->m32 * m.m23) + (this->m42 * m.m24);
+        prod.m32 = (this->m12 * m.m31) + (this->m22 * m.m32) + (this->m32 * m.m33) + (this->m42 * m.m34);
+        prod.m42 = (this->m12 * m.m41) + (this->m22 * m.m42) + (this->m32 * m.m43) + (this->m42 * m.m44);
+
+        prod.m13 = (this->m13 * m.m11) + (this->m23 * m.m12) + (this->m33 * m.m13) + (this->m43 * m.m14);
+        prod.m23 = (this->m13 * m.m21) + (this->m23 * m.m22) + (this->m33 * m.m23) + (this->m43 * m.m24);
+        prod.m33 = (this->m13 * m.m31) + (this->m23 * m.m32) + (this->m33 * m.m33) + (this->m43 * m.m34);
+        prod.m43 = (this->m13 * m.m41) + (this->m23 * m.m42) + (this->m33 * m.m43) + (this->m43 * m.m44);
+
+        prod.m14 = (this->m14 * m.m11) + (this->m24 * m.m12) + (this->m34 * m.m13) + (this->m44 * m.m14);
+        prod.m24 = (this->m14 * m.m21) + (this->m24 * m.m22) + (this->m34 * m.m23) + (this->m44 * m.m24);
+        prod.m34 = (this->m14 * m.m31) + (this->m24 * m.m32) + (this->m34 * m.m33) + (this->m44 * m.m34);
+        prod.m44 = (this->m14 * m.m41) + (this->m24 * m.m42) + (this->m34 * m.m43) + (this->m44 * m.m44);
 
         return prod;
     }

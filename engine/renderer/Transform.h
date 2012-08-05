@@ -47,6 +47,7 @@ public:
 
     void RotateWorldX(float radians);
     void RotateWorldY(float radians);
+    void RotateWorldZ(float radians);
 
     void LookAt(const vector3 &p);
     void LookAt(float x, float y, float z);

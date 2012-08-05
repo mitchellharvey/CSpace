@@ -380,7 +380,7 @@ void GLRenderer::ApplyMaterial(Material &material, Camera *camera, Renderable *r
                     matrix4x4 modelViewMatrix = camera->GetViewMatrix();
                     if (renderable)
                     {
-                        modelViewMatrix = modelViewMatrix * renderable->GetTransformMatrix();
+                        modelViewMatrix = renderable->GetTransformMatrix() * modelViewMatrix;
                     }
                     const float *viewMatrix = reinterpret_cast<const float *>(&modelViewMatrix);
                     glUniformMatrix4fv(program.modelViewMatrixAttribLoc, 1, GL_FALSE, viewMatrix);

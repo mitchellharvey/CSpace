@@ -58,7 +58,7 @@ void UpdateCamera(Camera &cam, Renderable &renderable, float delta)
             diff = Normalize(diff) * delta;
 
             cam.RotateLocalX(diff.y);
-            //cam.RotateLocalY(diff.x);
+            cam.RotateWorldY(diff.x);
             //cam.RotateWorldY(diff.x);
             //renderable.RotateWorldX(diff.y);
             //renderable.RotateWorldY(diff.x);
@@ -73,14 +73,17 @@ void UpdateCamera(Camera &cam, Renderable &renderable, float delta)
     vector3 pos = cam.GetTranslation();
     vector3 z = cam.GetZAxis();
     vector3 x = cam.GetXAxis();
+    vector3 y = cam.GetYAxis();
 
     if (GetAsyncKeyState('W'))
     {
         pos -= (z * (delta * moveSpeed));
+       //pos += (y * (delta * moveSpeed));
     }
     if (GetAsyncKeyState('S'))
     {
         pos += (z * (delta * moveSpeed));
+        //pos -= (y * (delta * moveSpeed));
     }
     if (GetAsyncKeyState('D'))
     {
@@ -139,6 +142,8 @@ int main(char **argv, int argc)
     cube.SetTranslation(0.0f, 0.0f, -10.0f);
     cube.SetModelResource(cubeModel);
 
+    cam.SetTranslation(0.0f, 0.0f, 0.0f);
+
     triangle.SetTranslation(0.0f, 0.0f, 1.0f);
     triangle.SetModelResource(triangleModel);
      
@@ -152,7 +157,7 @@ int main(char **argv, int argc)
     }
 
     scene.AddRenderable(&cube);
-    //scene.AddRenderable(&triangle);
+    scene.AddRenderable(&triangle);
 
     engine::renderer::Renderer *pRenderer = engine::renderer::CreateNewRenderer();
     pRenderer->Initialize();
@@ -168,22 +173,22 @@ int main(char **argv, int argc)
 
         if (GetAsyncKeyState(VK_UP))
         {
-            cube.RotateLocalX(delta * moveSpeed);
+            cube.RotateWorldX(delta * moveSpeed);
         }
 
         if (GetAsyncKeyState(VK_DOWN))
         {
-            cube.RotateLocalX(delta * -moveSpeed);
+            cube.RotateWorldX(delta * -moveSpeed);
         }
 
         if (GetAsyncKeyState(VK_RIGHT))
         {
-            cube.RotateLocalY(delta * moveSpeed);
+            cube.RotateWorldY(delta * moveSpeed);
         }
 
         if (GetAsyncKeyState(VK_LEFT))
         {
-            cube.RotateLocalY(delta * -moveSpeed);
+            cube.RotateWorldY(delta * -moveSpeed);
         }
 
         const float moveSpeed = 0.1f;

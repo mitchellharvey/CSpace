@@ -214,6 +214,25 @@ void Transform::RotateLocalY(float radians)
 //------------------------------------------------------------------------------------------------------------------------
 void Transform::RotateLocalZ(float radians)
 {
+    matrix4x4 curRot;
+    curRot.m11 = _transform.m11;
+    curRot.m21 = _transform.m21;
+    curRot.m31 = _transform.m31;
+    curRot.m12 = _transform.m12;
+    curRot.m22 = _transform.m22;
+    curRot.m32 = _transform.m32;
+    curRot.m13 = _transform.m13;
+    curRot.m23 = _transform.m23;
+    curRot.m33 = _transform.m33;
+
+    matrix4x4 rotation = RotationMatrixZ(radians);
+    rotation = rotation * curRot;
+    
+    vector3 trans = GetTranslation();
+    _transform = rotation;
+    _transform.m14 = trans.x;
+    _transform.m24 = trans.y;
+    _transform.m34 = trans.z;
 }
 //------------------------------------------------------------------------------------------------------------------------
 void Transform::RotateWorldX(float radians)
@@ -229,8 +248,8 @@ void Transform::RotateWorldX(float radians)
     curRot.m23 = _transform.m23;
     curRot.m33 = _transform.m33;
 
-    matrix4x4 rotation = RotationMatrix(radians, vector3(1.0f, 0.0f, 0.0f));
-    rotation = rotation * curRot;
+    matrix4x4 rotation = RotationMatrixX(radians);
+    rotation = curRot * rotation;
     
     vector3 trans = GetTranslation();
     _transform = rotation;
@@ -252,8 +271,31 @@ void Transform::RotateWorldY(float radians)
     curRot.m23 = _transform.m23;
     curRot.m33 = _transform.m33;
 
-    matrix4x4 rotation = RotationMatrix(radians, vector3(0.0f, 1.0f, 0.0));
-    rotation = rotation * curRot;
+    matrix4x4 rotation = RotationMatrixY(radians);
+    rotation = curRot * rotation;
+    
+    vector3 trans = GetTranslation();
+    _transform = rotation;
+    _transform.m14 = trans.x;
+    _transform.m24 = trans.y;
+    _transform.m34 = trans.z;
+}
+//------------------------------------------------------------------------------------------------------------------------
+void Transform::RotateWorldZ(float radians)
+{
+    matrix4x4 curRot;
+    curRot.m11 = _transform.m11;
+    curRot.m21 = _transform.m21;
+    curRot.m31 = _transform.m31;
+    curRot.m12 = _transform.m12;
+    curRot.m22 = _transform.m22;
+    curRot.m32 = _transform.m32;
+    curRot.m13 = _transform.m13;
+    curRot.m23 = _transform.m23;
+    curRot.m33 = _transform.m33;
+
+    matrix4x4 rotation = RotationMatrixZ(radians);
+    rotation = curRot * rotation;
     
     vector3 trans = GetTranslation();
     _transform = rotation;
